@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QTextEdit, QMessageBox
 )
 from PySide6.QtCore import Qt, Signal, QThread
-from PySide6.QtGui import QColor, QFont
+from PySide6.QtGui import QColor, QFont, QIcon
 
 from security_scanner import SecurityScanner
 from hardening_steps import HardeningSteps
@@ -107,6 +107,15 @@ class SecurityDashboardApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("GreenPaint ©")
+        
+        # Load custom icon for Windows taskbar
+        icon_path = self._find_icon_path()
+        if icon_path and icon_path.exists():
+            try:
+                self.setWindowIcon(QIcon(str(icon_path)))
+            except Exception:
+                pass
+        
         self.setGeometry(100, 100, 1400, 900)
         self.setMinimumSize(1000, 700)
 
@@ -117,6 +126,43 @@ class SecurityDashboardApp(QMainWindow):
         self._apply_global_stylesheet()
         self.setup_ui()
         self.start_scan()
+
+    def _find_icon_path(self):
+        """Find the icon file in application or script directory."""
+        icon_name = "greenpaint.ico"
+        
+        # If running as PyInstaller bundle (--onefile), use sys._MEIPASS
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            meipass_icon = Path(sys._MEIPASS) / icon_name
+            if meipass_icon.exists():
+                return meipass_icon
+        
+        # If running as PyInstaller bundle (--onedir), check the _internal folder
+        if getattr(sys, 'frozen', False):
+            bundle_dir = Path(sys.executable).parent
+            
+            # Check _internal folder (used by --onedir)
+            internal_icon = bundle_dir / "_internal" / icon_name
+            if internal_icon.exists():
+                return internal_icon
+            
+            # Check bundle root directory
+            icon_path = bundle_dir / icon_name
+            if icon_path.exists():
+                return icon_path
+        
+        # Check current working directory
+        cwd_icon = Path.cwd() / icon_name
+        if cwd_icon.exists():
+            return cwd_icon
+        
+        # Check script directory
+        script_dir = Path(__file__).parent
+        script_icon = script_dir / icon_name
+        if script_icon.exists():
+            return script_icon
+        
+        return None
 
     # ── Global stylesheet ─────────────────────────────────────────────────────
 
