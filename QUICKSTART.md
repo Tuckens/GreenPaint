@@ -1,74 +1,80 @@
-"""
-Quick Start Guide
-Getting started with OS Security Posture Monitor
-"""
-
 # QUICK START GUIDE: OS Security Posture Monitor
 
 ## 5-Minute Setup
 
-### Step 1: Install Python Packages (1 minute)
+### Step 1: Clone Repository (1 minute)
+```bash
+git clone https://github.com/YOUR_USERNAME/OS-Security-Monitor.git
+cd OS-Security-Monitor
+```
+
+### Step 2: Install Dependencies (1 minute)
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 2: Launch the Application (30 seconds)
+### Step 3: Run the Application (30 seconds)
+**Run as Administrator** (required for full scanning):
 ```bash
 python main.py
 ```
 
-### Step 3: Wait for Initial Scan (3 minutes)
-- The application will automatically start a security scan
-- You'll see a progress message in the status bar
-- Once complete, the dashboard will populate with results
+Or use the prebuilt executable:
+```bash
+GreenPaint.exe
+```
 
-### Step 4: Review Your Security Score
-- Look at the Security Score in the header (example: "Security Score: 65/100")
-- Check the Security Overview cards for individual component status
-- Review any issues listed in the "Recent Security Issues" section
+### Step 4: Wait for Initial Scan (2-3 minutes)
+- Application automatically starts scanning on launch
+- Progress updates shown in status bar
+- Dashboard updates with results once scan completes
+
+### Step 5: Review Your Security Score
+- Security Score displayed in header (0-100)
+- Security cards show status of each component
+- Recent Issues list shows vulnerabilities to address
 
 ## Understanding the Dashboard
 
 ### Security Score Interpretation
-- **0-30**: 🔴 Critical - Your system needs immediate hardening
-- **31-60**: 🟠 High Risk - Multiple vulnerabilities exist
+- **0-30**: 🔴 Critical - Immediate hardening needed
+- **31-60**: 🟠 High Risk - Multiple vulnerabilities
 - **61-80**: 🟡 Fair - Room for improvement
 - **81-100**: 🟢 Excellent - Strong security posture
 
 ### Security Cards
-Each card shows the status of a security component:
-- **Green/Enabled**: This component is properly configured
-- **Yellow/Warning**: This component needs attention
-- **Red/Critical**: This component is disabled or misconfigured
+Each card shows real-time status:
+- 🟢 **Green/Enabled**: Properly configured
+- 🟡 **Yellow/Warning**: Needs attention
+- 🔴 **Red/Disabled**: Critical - action needed
 
 ## First 30 Minutes: Critical Actions
 
-### Priority 1: Check Critical Issues (5 minutes)
-1. Go to "Security Status" tab
-2. Look for any items marked as "Disabled" or "Unknown"
-3. Note which items are critical
+### Priority 1: Review Dashboard (5 minutes)
+1. After scan completes, review Security Score
+2. Check each security category card
+3. Read "Recent Security Issues" list
 
 ### Priority 2: Enable Firewall (3 minutes)
-1. Scroll through "Recent Security Issues"
-2. If Firewall is disabled, this is CRITICAL
-3. Go to "Hardening Guide" tab
-4. Find "Enable Windows Firewall"
-5. Click "Implement Now" for step-by-step instructions
+1. If Firewall shows "Disabled" in dashboard
+2. Go to "Hardening Guide" tab
+3. Find "Enable Windows Firewall"
+4. Click "Implement Now" for instructions
 
 ### Priority 3: Enable Antivirus (3 minutes)
-1. In "Hardening Guide", find "Enable Windows Defender Real-time Protection"
+1. In "Hardening Guide", find antivirus step
 2. Click "Implement Now"
-3. Follow the instructions
+3. Follow step-by-step instructions
 
 ### Priority 4: Install Updates (5 minutes)
-1. Find "Install Critical Security Updates" in "Hardening Guide"
+1. Find "Install Critical Security Updates"
 2. Click "Implement Now"
-3. Allow system to check for and install updates
+3. Allow system to install updates
 
 ### Priority 5: Backup & Plan (9 minutes)
-1. Find "Set Up Automatic Backup" in "Hardening Guide"
-2. Click to see how to set up backups
-3. Before making changes, ensure you have a backup strategy
+1. Plan your security improvements
+2. Note which hardware supports BitLocker/TPM
+3. Set up automatic backups before making changes
 
 ## First Week: High Priority Actions
 
@@ -117,9 +123,7 @@ Keep a simple checklist:
 **A:** Yes, most security checks require administrator privileges. Some checks may not work without elevated permissions.
 
 ### Q: How long does a scan take?
-**A:** First scan: 3-5 minutes
-Subsequent scans: 2-3 minutes
-Time varies based on system load and complexity.
+**A:** First scan: 2-3 minutes | Subsequent scans: 1-2 minutes (varies by system load)
 
 ### Q: Will hardening slow down my system?
 **A:** Most security features have minimal impact. Some features like disk encryption may slightly affect disk performance, but security gains outweigh the cost.

@@ -10,10 +10,12 @@ A comprehensive desktop application designed to monitor your operating system's 
 - **Comprehensive Security Scanning** - Automated checks for critical security components:
   - Firewall status and configuration
   - Antivirus/Antimalware protection
-  - System updates and patches
-  - User account controls
-  - Network security settings
-  - Disk encryption status
+  - System updates detection
+  - User Account Control (UAC)
+  - Network security profile
+  - Disk encryption (BitLocker)
+  - TPM 2.0 status
+  - Secure Boot status
 
 - **Hardening Guide** - Step-by-step recommendations for improving security:
   - 20+ hardening steps with detailed instructions
@@ -32,9 +34,9 @@ A comprehensive desktop application designed to monitor your operating system's 
 ## System Requirements
 
 ### Supported Operating Systems
-- Windows 10/11 (Pro or Enterprise)
-- Ubuntu/Debian-based Linux
-- macOS 10.15+
+- **Windows 10/11** (Pro or Enterprise - Optimized)
+- Ubuntu/Debian-based Linux (Limited support)
+- macOS 10.15+ (Limited support)
 
 ### Minimum Hardware
 - 1 GHz processor
@@ -44,7 +46,7 @@ A comprehensive desktop application designed to monitor your operating system's 
 
 ### Software Requirements
 - Python 3.8+
-- PyQt5 for GUI
+- PySide6 for GUI
 - Administrative privileges for security scanning
 
 ## Installation
@@ -56,7 +58,8 @@ python --version  # Requires Python 3.8+
 
 ### Step 1: Clone or download the repository
 ```bash
-cd /path/to/security-monitor
+git clone https://github.com/YOUR_USERNAME/OS-Security-Monitor.git
+cd OS-Security-Monitor
 ```
 
 ### Step 2: Create a virtual environment (recommended)
@@ -80,9 +83,14 @@ pip install -r requirements.txt
 
 ### Step 4: Run the application
 
-**Windows:**
+**Windows (Run as Administrator - required):**
 ```bash
 python main.py
+```
+
+**Or use the prebuilt executable:**
+```bash
+GreenPaint.exe
 ```
 
 **Linux/macOS:**
@@ -155,6 +163,42 @@ Step-by-step hardening recommendations:
 - Configure scan intervals
 - Export security reports
 - Notification preferences
+
+## Real-Time Security Checks
+
+The application performs 8 comprehensive real-time checks:
+
+### Antivirus Protection
+- Detects installed antivirus products via WMI
+- Reports real-time protection status
+
+### Windows Firewall
+- Verifies Windows Firewall is enabled
+- Checks firewall profile configuration
+
+### BitLocker Encryption
+- Checks C: drive encryption status
+- Reports protection level (On/Off)
+
+### TPM 2.0/1.2
+- Detects TPM presence and status
+- Verifies hardware security module availability
+
+### Secure Boot
+- Checks UEFI Secure Boot configuration
+- Verifies bootloader protection is enabled
+
+### Windows Updates
+- Detects pending system updates
+- Shows last successful update check timestamp
+
+### User Account Control (UAC)
+- Verifies UAC is enabled in registry
+- Checks privilege escalation protection
+
+### Network Profile
+- Determines network type (Private/Public)
+- Reports network discovery status
 
 ## Security Hardening Steps
 
@@ -241,29 +285,27 @@ Each scan generates:
 
 ## Security Score Calculation
 
-The application calculates security scores based on:
+The application calculates real-time security scores based on the 8 core checks:
 
 ```
-Base Score: 0-100 points distributed across categories
-- Firewall: 15 points
-- Antivirus: 15 points
-- Updates: 15 points
-- User Accounts: 15 points
-- Network Security: 15 points
-- Encryption: 10 points
+Base Score: 100 points
+- Each check starts at full points
+- Critical failures (Disabled): -15 points
+- High severity issues (Warning): -8 points
 
-Penalties:
-- Critical issues: -10 points each
-- High severity issues: -5 points each
-- Medium severity issues: -2 points each
+Example:
+100 (base)
+- 15 (Firewall disabled)
+- 8 (Updates pending)
+= 77 score
 ```
 
 ### Score Interpretation
 
-- 🔴 **0-30**: Critical security posture - act immediately
-- 🟠 **31-60**: Weak security posture - implement hardening steps
-- 🟡 **61-80**: Fair security posture - implement medium priority steps
-- 🟢 **81-100**: Strong security posture - maintain current practices
+- 🔴 **0-30**: Critical - Immediate hardening required
+- 🟠 **31-60**: High Risk - Multiple vulnerabilities present
+- 🟡 **61-80**: Fair - Room for improvement
+- 🟢 **81-100**: Excellent - Strong security posture
 
 ## Reporting
 
@@ -300,28 +342,29 @@ sudo python3 main.py
 
 ### Scan Takes Too Long
 
-- Some checks may take 30-60 seconds
-- This is normal for the first scan
-- System load may affect scan time
-- Try closing other applications
+- PowerShell initialization takes 1-2 seconds per command
+- First scan: 2-3 minutes (includes PowerShell startup)
+- Subsequent scans: 1-2 minutes
+- System load and antivirus may slow down PowerShell queries
+- Close CPU-intensive applications
 
 ### "Permission Denied" Errors
 
 Many security checks require administrative privileges:
 
-**Windows:** Run `main.py` as Administrator
+**Windows:** Run `python main.py` as Administrator
 
 **Linux/macOS:** Use `sudo`:
 ```bash
 sudo python3 main.py
 ```
 
-### PyQt5 Import Errors
+### PySide6 Import Errors
 
-Reinstall PyQt5:
+Reinstall PySide6:
 ```bash
-pip uninstall PyQt5 PyQt5-sip
-pip install PyQt5==5.15.7
+pip uninstall PySide6
+pip install -r requirements.txt
 ```
 
 ## Best Practices

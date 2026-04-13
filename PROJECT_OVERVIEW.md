@@ -65,37 +65,38 @@ UI_UX/
 ## 🔧 Core Components
 
 ### 1. **main.py** (700 lines)
-- Main application window built with PyQt5
+- Main application window built with PySide6
 - 4 tabs: Dashboard | Security Status | Hardening Guide | Settings
 - Background scanning with threading
-- Report generation
+- Report generation and export
 
-### 2. **security_scanner.py** (400 lines)
-- Comprehensive OS security scanning
-- Windows, Linux, macOS support
-- 8+ security checks per platform
-- Automatic security score calculation
+### 2. **security_scanner.py** (150 lines)
+- Windows-focused PowerShell-based scanning
+- 8 real-time security checks
+- Silent background execution (no visible windows)
+- 15-second timeout protection against hangs
+- CPU admin privilege checking
 
 ### 3. **hardening_steps.py** (400 lines)
-- 20+ security hardening steps
-- OS-specific recommendations
-- Priority & difficulty levels
-- Implementation tracking
+- 20+ security hardening steps with detailed instructions
+- Priority levels (Critical → High → Medium → Low)
+- Difficulty ratings (Easy → Medium → Hard)
+- OS-specific guidance (Windows, Linux, macOS)
 
 ### 4. **ui_components.py** (350 lines)
-- 6 reusable PyQt5 components:
-  - SecurityCard - Status display
+- 6 reusable PySide6 components:
+  - SecurityCard - Status display with color coding
   - StatusIndicator - On/off indicator
-  - HardeningCard - Step display
+  - HardeningCard - Step display with priority badges
   - ProgressIndicator - Progress bar
-  - ThreatIndicator - Threat level
-  - MetricCard - Metric display
+  - ThreatIndicator - Threat level display
+  - MetricCard - Metric value display
 
 ### 5. **config.py** (100 lines)
-- 50+ configuration constants
-- Color scheme & typography
-- Feature flags
-- Security standards
+- 50+ application configuration constants
+- Color scheme & typography (Segoe UI, 11px base)
+- UI colors (primary #1e3a5f, secondary #2196F3, etc.)
+- Feature flags and security standards
 
 ---
 
@@ -190,9 +191,9 @@ UI_UX/
 ## 📱 System Requirements
 
 ### Operating Systems
-- ✅ Windows 10/11 (Pro or Enterprise)
-- ✅ Ubuntu/Debian-based Linux
-- ✅ macOS 10.15+
+- ✅ Windows 10/11 (Pro or Enterprise - Optimized)
+- ⚠️ Ubuntu/Debian-based Linux (Limited support)
+- ⚠️ macOS 10.15+ (Limited support)
 
 ### Software
 - Python 3.8+
@@ -245,14 +246,15 @@ python main.py
 
 | Metric | Value |
 |--------|-------|
-| Total Lines of Code | ~2,000 |
+| Total Lines of Code | ~1,800 |
 | Python Modules | 5 |
-| Security Checks | 20+ |
-| Hardening Steps | 20+ |
-| UI Components | 6 |
-| Supported Platforms | 3 (Win/Linux/Mac) |
-| Configuration Options | 50+ |
+| Real-time Security Checks | 8 |
+| Hardening Step Recommendations | 20+ |
+| UI Components | 6+ |
+| Supported Platforms | Windows 10/11 (Optimized) |
+| Configuration Constants | 50+ |
 | Documentation Pages | 5 |
+| Framework | PySide6 6.5.0+ |
 
 ---
 

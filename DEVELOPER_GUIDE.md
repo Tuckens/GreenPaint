@@ -10,10 +10,10 @@ For developers extending or maintaining the OS Security Posture Monitor
 **OS Security Posture Monitor** is a PyQt5-based desktop application for comprehensive OS security assessment and hardening guidance.
 
 ### Technology Stack
-- **Framework**: PyQt5 5.15.7
+- **Framework**: PySide6 6.5.0+
 - **Language**: Python 3.8+
-- **GUI**: Custom PyQt5 components
-- **System Integration**: subprocess for OS commands, psutil for metrics
+- **GUI**: Custom PySide6 components with Segoe UI
+- **System Integration**: subprocess for PowerShell queries
 - **Data Format**: JSON for configuration and reports
 
 ## Architecture
@@ -97,57 +97,63 @@ export_report()         # Save JSON report
 
 ### 2. security_scanner.py
 
-**Purpose**: OS security scanning and assessment
+**Purpose**: Windows security scanning using PowerShell queries
 
 **Key Classes**:
 - `SecurityScanner`: Main scanner class
-  - Auto-detects OS type
-  - Runs appropriate platform-specific scans
-  - Calculates security score
+  - Checks admin privileges
+  - Executes PowerShell commands in background
+  - Returns UI-compatible data format
 
-**Platform-Specific Methods**:
-
+**Key Methods**:
 ```python
-# Windows checks
-check_windows_firewall()      # Windows Firewall status
-check_windows_updates()       # Windows Update status
-check_user_account_control()  # UAC status
-check_antivirus()             # Windows Defender status
-check_disk_encryption()       # BitLocker status
-check_network_settings()      # Network profile settings
+_run_ps(command: str, timeout: int) -> str
+    # Executes PowerShell command silently with timeout
+    # Uses STARTUPINFO to hide window without deadlock
 
-# Linux checks
-check_linux_firewall()        # UFW/iptables status
-check_linux_updates()         # Package updates pending
-check_ssh_config()            # SSH security settings
+get_security_status() -> dict
+    # Performs 5 core security checks:
+    # - _check_antivirus()
+    # - _check_firewall()
+    # - _check_bitlocker()
+    # - _check_tpm()
+    # - _check_secure_boot()
 
-# macOS checks
-check_macos_firewall()        # macOS firewall
-check_macos_encryption()      # FileVault status
+_check_updates() -> dict
+    # Checks for pending Windows updates
 
-# Utility
-calculate_security_score()    # Overall score calculation
+_check_user_accounts() -> dict
+    # Checks User Account Control (UAC) status
+
+_check_network_settings() -> dict
+    # Checks network profile (Private/Public)
+
+run_full_scan() -> dict
+    # Main interface - returns UI-formatted data
+    # Maps raw checks to category names
+    # Calculates overall security score
 ```
 
 **Return Format**:
 ```python
 {
+    "overall_score": 75,  # 0-100
     "timestamp": "2026-04-13T10:30:00",
-    "os_type": "Windows",
-    "os_version": "10.0.19045",
-    "categories": {
-        "Firewall": {"status": "Enabled", "details": ""},
-        "Antivirus": {"status": "Running", "details": ""},
-        ...
-    },
+    "Antivirus": {"status": "Enabled"},
+    "Firewall": {"status": "Disabled"},
+    "Encryption": {"status": "Enabled"},
+    "Updates": {"status": "Unknown"},
+    "User Accounts": {"status": "Enabled"},
+    "Network Security": {"status": "Private"},
     "issues": [
         {
-            "title": "Windows Update pending",
-            "severity": "high",
-            "recommendation": "Install update KB5015987"
+            "title": "Firewall: Disabled",
+            "severity": "critical",
+            "recommendation": "Firewall is OFF"
         }
     ],
-    "overall_score": 65
+    "categories": { ... }
+}
 }
 ```
 

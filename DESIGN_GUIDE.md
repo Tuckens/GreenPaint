@@ -1,6 +1,6 @@
 """
 UI/UX Design Documentation
-Visual design and user experience specifications
+Visual design and user experience specifications for PySide6 application
 """
 
 # UI/UX DESIGN DOCUMENTATION
